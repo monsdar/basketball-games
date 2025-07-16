@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basketball Führerschein</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+            .page-break-after { page-break-after: always; }
+            .avoid-break { page-break-inside: avoid; }
+            .force-break { page-break-inside: auto; }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+        
+        .game-flow {
+            padding: 20px;
+            position: relative;
+        }
+        
+        .phase {
+            background: white;
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .phase h2 {
+            color: #2c3e50;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .phase-icon {
+            background: #3498db;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        
+        .tasks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .task {
+            background: #f8f9fa;
+            border: 2px solid #e74c3c;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .task h3 {
+            color: #e74c3c;
+            font-size: 1em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .task-icon {
+            color: #e74c3c;
+            font-size: 1em;
+        }
+        
+        .task-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .arrow {
+            text-align: center;
+            font-size: 2em;
+            color: #3498db;
+            margin: 10px 0;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            color: #856404;
+            font-size: 0.9em;
+        }
+        
+        .warning i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+        
+        .decision {
+            background: #e8f5e8;
+            border: 2px solid #28a745;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #155724;
+        }
+        
+        .vehicle-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+        
+        .vehicle-table th,
+        .vehicle-table td {
+            border: 2px solid #3498db;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .vehicle-table th {
+            background: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .vehicle-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .print-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .result-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .result-section h3 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5em; }
+            .tasks { grid-template-columns: 1fr; }
+            .phase { margin: 15px 0; }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button no-print" onclick="window.print()">
+        <i class="fas fa-print"></i> Drucken
+    </button>
+    
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-car"></i> Basketball Führerschein</h1>
+            <p>Erreiche deinen Führerschein und verdiene dir ein Auto!</p>
+        </div>
+        
+        <div class="game-flow">
+            <!-- Phase 1: Vorbereitung -->
+            <div class="phase">
+                <h2>
+                    <div class="phase-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    Teil 1: Vorbereitung auf die Prüfung
+                </h2>
+                
+                <div class="tasks">
+                    <div class="task">
+                        <h3><i class="fas fa-city task-icon"></i>Stadtfahrt</h3>
+                        <div class="task-description">5 Freiwürfe</div>
+                    </div>
+                    <div class="task">
+                        <h3><i class="fas fa-moon task-icon"></i>Nachtfahrt</h3>
+                        <div class="task-description">5 Sprungwürfe</div>
+                    </div>
+                    <div class="task">
+                        <h3><i class="fas fa-road task-icon"></i>Autobahnfahrt</h3>
+                        <div class="task-description">5 Korbleger</div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Kein Treffer?</strong> Leider nicht bestanden, du bekommst eine Busfahrkarte
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 2: Theorieprüfung -->
+            <div class="phase">
+                <h2>
+                    <div class="phase-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    Teil 2: Theorieprüfung
+                </h2>
+                
+                <div class="tasks">
+                    <div class="task">
+                        <h3><i class="fas fa-ladder task-icon"></i>Leiterspiel</h3>
+                        <div class="task-description">5 Stufen</div>
+                    </div>
+                    <div class="task">
+                        <h3><i class="fas fa-arrow-right task-icon"></i>Korbleger rechts</h3>
+                        <div class="task-description">5 Korbleger</div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Kein Treffer?</strong> Du musst nochmal in die Vorbereitung!
+                </div>
+            </div>
+            
+            <div class="page-break arrow">↓</div>
+            
+            <!-- Phase 3: Praxisprüfung -->
+            <div class="phase">
+                <h2>
+                    <div class="phase-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    Teil 3: Praxisprüfung
+                </h2>
+                
+                <div class="tasks">
+                    <div class="task">
+                        <h3><i class="fas fa-globe task-icon"></i>Reise um die Welt</h3>
+                        <div class="task-description">5 Länder</div>
+                    </div>
+                    <div class="task">
+                        <h3><i class="fas fa-arrow-left task-icon"></i>Korbleger links</h3>
+                        <div class="task-description">5 Korbleger</div>
+                    </div>
+                </div>
+                
+                <div class="warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Kein Treffer?</strong> Du musst nochmal in die Vorbereitung!
+                </div>
+            </div>
+            
+            <div class="arrow">↓</div>
+            
+            <!-- Phase 4: Auto verdienen -->
+            <div class="phase">
+                <h2>
+                    <div class="phase-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    Teil 4: Auto verdienen
+                </h2>
+                
+                <div class="tasks">
+                    <div class="task">
+                        <h3><i class="fas fa-basketball-ball task-icon"></i>Korbleger Challenge</h3>
+                        <div class="task-description">10 Korbleger (mitzählen!)</div>
+                    </div>
+                    <div class="task">
+                        <h3><i class="fas fa-bullseye task-icon"></i>Freiwurf Challenge</h3>
+                        <div class="task-description">10 Freiwürfe (mitzählen!)</div>
+                    </div>
+                    <div class="task">
+                        <h3><i class="fas fa-arrow-up task-icon"></i>Sprungwurf Challenge</h3>
+                        <div class="task-description">10 Sprungwürfe (mitzählen!)</div>
+                    </div>
+                </div>
+                
+                <div class="decision">
+                    <i class="fas fa-trophy"></i>
+                    Zähle alle Treffer zusammen und finde dein Fahrzeug!
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <!-- Fahrzeug-Tabelle -->
+        <div class="game-flow">
+            <div class="phase">
+                <h2>
+                    <div class="phase-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    Dein verdientes Fahrzeug
+                </h2>
+                
+                <p style="font-size: 1.1em; margin-bottom: 15px; text-align: center;">
+                    <strong>Zähle alle deine Treffer zusammen und finde heraus, welches Fahrzeug du dir verdient hast!</strong>
+                </p>
+                
+                <table class="vehicle-table">
+                    <thead>
+                        <tr>
+                            <th>Treffer</th>
+                            <th>Fahrzeug</th>
+                            <th>Treffer</th>
+                            <th>Fahrzeug</th>
+                            <th>Treffer</th>
+                            <th>Fahrzeug</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Badewanne</td><td>11</td><td>Minibagger</td><td>21</td><td>Wohnmobil</td></tr>
+                        <tr><td>2</td><td>Ruderboot</td><td>12</td><td>Fiat Panda</td><td>22</td><td>Porsche</td></tr>
+                        <tr><td>3</td><td>Einkaufswagen</td><td>13</td><td>Golfcart</td><td>23</td><td>Monster Truck</td></tr>
+                        <tr><td>4</td><td>Seifenkiste</td><td>14</td><td>Trabi</td><td>24</td><td>Polizeiauto</td></tr>
+                        <tr><td>5</td><td>Drahtesel</td><td>15</td><td>Volkswagen</td><td>25</td><td>Lamborghini</td></tr>
+                        <tr><td>6</td><td>Ochsenkarren</td><td>16</td><td>Mini Cooper</td><td>26</td><td>Ferrari</td></tr>
+                        <tr><td>7</td><td>Tretroller</td><td>17</td><td>Audi</td><td>27</td><td>Raketenauto</td></tr>
+                        <tr><td>8</td><td>Pferdekutsche</td><td>18</td><td>Jeep</td><td>28</td><td>Trecker</td></tr>
+                        <tr><td>9</td><td>Mofa</td><td>19</td><td>Tesla</td><td>29</td><td>Formel-1 Wagen</td></tr>
+                        <tr><td>10</td><td>Gokart</td><td>20</td><td>Mercedes</td><td>30</td><td>Hubschrauber</td></tr>
+                    </tbody>
+                </table>
+                
+                <div class="result-section">
+                    <p style="font-size: 1em;">
+                        <strong>Gesamte Treffer: _____</strong><br>
+                        <strong>Mein verdientes Fahrzeug: _________________</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
