@@ -28,10 +28,15 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
+      - name: Create pages directory
+        run: |
+          mkdir -p pages
+          cp fuehrerschein.html pages/index.html
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'fuehrerschein.html'
+          path: 'pages'
           
       - name: Deploy to GitHub Pages
         id: deployment
